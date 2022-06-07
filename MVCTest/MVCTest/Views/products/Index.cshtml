@@ -1,0 +1,115 @@
+﻿@model IEnumerable<MVCTest.products>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<a href="@Url.Action("Create", "products")"><i class="btn btn-success btn-sm">Create</i></a>
+<br />
+<br />
+
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">DataTables Products</h6>
+</div>
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.name)</th>
+                    <th>@Html.DisplayNameFor(model => model.category.categoryName)</th>
+                    <th>@Html.DisplayNameFor(model => model.price)</th>
+                    <th>@Html.DisplayNameFor(model => model.thumbnail)</th>
+                    <th>@Html.DisplayNameFor(model => model.size)</th>
+                    <th>@Html.DisplayNameFor(model => model.weight)</th>
+                    <th>@Html.DisplayNameFor(model => model.created_at)</th>
+                    <th>@Html.DisplayNameFor(model => model.update_at)</th>
+                    <th style="width: 108px;"></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.name)</th>
+                    <th>@Html.DisplayNameFor(model => model.category.categoryName)</th>
+                    <th>@Html.DisplayNameFor(model => model.price)</th>
+                    <th>@Html.DisplayNameFor(model => model.thumbnail)</th>
+                    <th>@Html.DisplayNameFor(model => model.size)</th>
+                    <th>@Html.DisplayNameFor(model => model.weight)</th>
+                    <th>@Html.DisplayNameFor(model => model.created_at)</th>
+                    <th>@Html.DisplayNameFor(model => model.update_at)</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr id="row_@item.id">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.category.categoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.price)
+                    </td>
+                    <td>
+                        <img src="@Url.Content(item.thumbnail)" alt="Image" height="100" width="100" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.weight)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.created_at)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.update_at)
+                    </td>
+                    <td style="width:100px">
+                        <a href="@Url.Action("Edit", "products", new { id = item.id })">
+                            <i class="fa fa-edit btn btn-info btn-sm"></i>
+                        </a>
+                        <a onclick="showConfirmModalDialog(@item.id)">
+                            <i class="fas fa-trash btn-danger btn-sm"></i>
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    function showConfirmModalDialog(id) {
+
+        $('#YesOption').attr('href', '/products/Delete/' + id);
+        $('#confirmationId').modal('show');
+    }
+</script>
+<!-- Modal -->
+<div class="modal fade" id="confirmationId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">Do you want to delete ?</div>
+            <div style="text-align:center;display:none" id="loaderDiv"></div>
+                <div class="modal-footer">
+                    <a  class="btn btn-default" data-dismiss="modal">Cancel</a>
+                    <a id="YesOption" class="btn btn-danger" ">Confirm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MVCTest.category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<a href="@Url.Action("Create", "categories")"><i class="btn btn-success btn-sm">Create</i></a>
+<br />
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.categoryName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.categoryName)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "categories", new { id = item.id })">
+                    <i class="fa fa-edit  btn-info btn-sm"></i>
+                </a>
+                <a href="@Url.Action("Delete", "categories", new { id = item.id })">
+                    <i class="fas fa-trash  btn-danger btn-sm"></i>
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>
